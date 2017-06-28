@@ -1,0 +1,48 @@
+{
+  "name": "johnny-dependency",
+  "version": "0.3.0",
+  "description": "Get a graph of npm dependencies",
+  "main": "lib/index.js",
+  "bin": "lib/cli.js",
+  "author": "alex leon <alexleon@domain.com.au>",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src/ -d lib/",
+    "start": "yarn run build && node lib/cli.js",
+    "prepublish": "yarn run build",
+    "lint": "./node_modules/.bin/eslint src/",
+    "test": "yarn run flow && yarn run lint"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-flowtype": "^2.34.0",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-jsx-a11y": "^5.1.0",
+    "eslint-plugin-react": "^7.1.0",
+    "flow-bin": "^0.48.0",
+    "mocha": "^3.4.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "meow": "^3.7.0",
+    "npm-package-arg": "^5.1.2",
+    "pacote": "^2.7.36",
+    "rxjs": "^5.4.1",
+    "untildify": "^3.0.2"
+  },
+  "keywords": [
+    "cli",
+    "npm",
+    "dependencies",
+    "dependency graph",
+    "dependency management",
+    "dependency versions",
+    "outdated dependencies",
+    "parse dependencies",
+    "version"
+  ]
+}
