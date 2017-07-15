@@ -38,6 +38,7 @@ function getDependencies(
 
   function getDirectDependencies(npmPackage: PackageAtVersion, manifest: Manifest) {
     const key = `${npmPackage.name}@${npmPackage.version}`;
+
     if (!(key in resolvedDependencies)) {
       resolvedDependencies[key] = manifest.version;
 

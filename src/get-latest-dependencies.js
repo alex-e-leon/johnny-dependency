@@ -18,6 +18,7 @@ function getLatestDependencies(
 
   function getPackageDependencies(npmPackageName: string): Promise<PackageWithDeps> {
     const packageAtVersion = { name: npmPackageName, version: 'latest' };
+
     return getPackage(packageAtVersion).then(manifest => (
       getPackageMeta(packageAtVersion, manifest)
     ));
