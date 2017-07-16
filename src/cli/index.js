@@ -59,5 +59,5 @@ if (packageAtVersion instanceof Error) {
 }
 
 buildGraph(packageAtVersion, pacoteOptions).then((res) => {
-  printGraph(res, '');
+  printGraph(res);
 });

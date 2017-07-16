@@ -1,6 +1,7 @@
 /* eslint-disable no-console, no-unused-expressions, prefer-template */
 const chalk = require('chalk');
 const semver = require('semver');
+const printTree = require('print-tree');
 
 const dependencyColours = {
   latest: chalk.bold.green,
@@ -44,31 +45,12 @@ function printLine(graph, branch) {
   );
 }
 
-function printGraph(graph, branch) {
-  const isGraphHead = branch.length === 0;
-  let branchHead = '';
-
-  if (!isGraphHead) {
-    branchHead = graph.children && graph.children.length !== 0 ? '┬ ' : '─ ';
-  }
-
-  printLine(graph, `${branch}${branchHead}`);
-
-  if (graph.children) {
-    let baseBranch = branch;
-
-    if (!isGraphHead) {
-      const isChildOfLastBranch = branch.slice(-2) === '└─';
-      baseBranch = branch.slice(0, -2) + (isChildOfLastBranch ? '  ' : '| ');
-    }
-
-    const nextBranch = baseBranch + '├─';
-    const lastBranch = baseBranch + '└─';
-
-    graph.children.forEach((child, index) => {
-      printGraph(child, graph.children.length - 1 === index ? lastBranch : nextBranch);
-    });
-  }
+function printGraph(graph) {
+  printTree(
+    graph,
+    printLine,
+    node => node.children,
+  );
 }
 
 module.exports = printGraph;
