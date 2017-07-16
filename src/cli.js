@@ -101,7 +101,7 @@ function printLine(graph, depth, lastChild = false, hasLastParent = false) {
   );
 
   const latest = graph.version !== graph.latestVersion
-    ? chalk.reset.dim(` -- latest: ${graph.latestVersion}`)
+    ? chalk.reset.dim(` latest: ${graph.latestVersion}`)
     : '';
 
   const versionStatus = outOfDate(graph.version, graph.latestVersion);
