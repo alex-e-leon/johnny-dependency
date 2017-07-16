@@ -1,15 +1,16 @@
 // @flow
 
-import type { NormalizedDependencies, PackageAtVersion, PackageWithDeps, Manifest } from './types';
+import type { PackageVersionMap, PackageAtVersion, PackageWithDeps, Manifest } from './types';
 
 const pacote = require('pacote');
 const rxjs = require('rxjs');
 const npa = require('npm-package-arg');
 const { getPackageMeta } = require('./util');
 
-function flattenDependencies(deps: NormalizedDependencies): Array<PackageAtVersion> {
+function flattenDependencies(deps: PackageVersionMap): Array<PackageAtVersion> {
   return Object.keys(deps).reduce((acc, name) => {
     const version = deps[name];
+
     return acc.concat({ name, version });
   }, []);
 }
@@ -17,6 +18,7 @@ function flattenDependencies(deps: NormalizedDependencies): Array<PackageAtVersi
 function validateDeps(packages: Array<PackageAtVersion>): Array<PackageAtVersion> {
   return packages.filter((npmPackage) => {
     const type = npa(`${npmPackage.name}@${npmPackage.version}`).type;
+
     return type === 'tag' || type === 'version' || type === 'range';
   });
 }
@@ -68,8 +70,8 @@ function getDependencies(
     return new Promise((resolve) => {
       getPackage(npmPackage).then((manifest) => {
         getDirectDependencies(npmPackage, manifest)
-          .reduce((acc, curr) => acc.concat(curr), [])
-          .subscribe((dependencies) => { resolve({ dependencies, resolvedDependencies }); });
+        .reduce((acc, curr) => acc.concat(curr), [])
+        .subscribe((dependencies) => { resolve({ dependencies, resolvedDependencies }); });
       });
     });
   }

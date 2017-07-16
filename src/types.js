@@ -5,21 +5,21 @@ export type PackageAtVersion = {
   version: string
 };
 
-export type NormalizedDependencies = {
+export type PackageVersionMap = {
   [string]: string
 };
 
 export type PackageWithDeps = {
   name: string,
   version: string,
-  deps: NormalizedDependencies,
-  devDeps: NormalizedDependencies,
-  peerDeps: NormalizedDependencies,
+  deps: PackageVersionMap,
+  devDeps: PackageVersionMap,
+  peerDeps: PackageVersionMap,
 };
 
 export type Manifest = {
   version: string,
-  dependencies: NormalizedDependencies,
-  devDependencies: NormalizedDependencies,
-  peerDependencies: NormalizedDependencies,
+  dependencies: PackageVersionMap,
+  devDependencies: PackageVersionMap,
+  peerDependencies: PackageVersionMap,
 };

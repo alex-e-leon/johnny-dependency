@@ -1,6 +1,6 @@
 // @flow
 
-import type { PackageWithDeps, PackageAtVersion, NormalizedDependencies } from './types';
+import type { PackageWithDeps, PackageAtVersion, PackageVersionMap } from './types';
 
 function resolveDependencies({ dependencies, resolvedDependencies }: {
   dependencies: Array<PackageWithDeps>,
@@ -24,7 +24,7 @@ function matchPackageNameAndVersion(a: PackageAtVersion, b: PackageAtVersion): b
 function formatGraphWithoutCircularDeps(
   initialRoot: PackageAtVersion,
   resolvedDependencies: Array<PackageWithDeps>,
-  latestVersions: NormalizedDependencies,
+  latestVersions: PackageVersionMap,
 ) {
   const hits = [];
 

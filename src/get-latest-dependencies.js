@@ -1,6 +1,6 @@
 // @flow
 
-import type { PackageAtVersion, PackageWithDeps, Manifest, NormalizedDependencies } from './types';
+import type { PackageAtVersion, PackageWithDeps, Manifest, PackageVersionMap } from './types';
 
 const { getPackageMeta } = require('./util');
 
@@ -9,7 +9,7 @@ const pacote = require('pacote');
 function getLatestDependencies(
   packages: Array<string>,
   pacoteOptions: Object = {},
-): Promise<NormalizedDependencies> {
+): Promise<PackageVersionMap> {
   function getPackage(npmPackage: PackageAtVersion): Promise<Manifest> {
     const spec = `${npmPackage.name}@${npmPackage.version}`;
 

@@ -3,13 +3,13 @@
   "version": "0.4.2",
   "description": "npm -ls for remote packages",
   "main": "lib/index.js",
-  "bin": "lib/cli.js",
+  "bin": "lib/cli/index.js",
   "repository": "alex-e-leon/johnny-dependency",
   "author": "alex leon <alex@leon.st>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src/ -d lib/ && chmod 755 lib/cli.js",
-    "start": "yarn run build && ./lib/cli.js",
+    "build": "babel src/ -d lib/ && chmod 755 lib/cli/index.js",
+    "start": "yarn run build && ./lib/cli/index.js",
     "prepublish": "yarn run build",
     "lint": "./node_modules/.bin/eslint src/",
     "test": "yarn run flow && yarn run lint"
