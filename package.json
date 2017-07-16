@@ -1,6 +1,6 @@
 {
   "name": "johnny-dependency",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "npm -ls for remote packages",
   "main": "lib/index.js",
   "bin": "lib/cli/index.js",
