@@ -1,11 +1,9 @@
 {
   "extends": [
-    "airbnb",
+    "airbnb-base",
     'plugin:flowtype/recommended',
   ],
   "plugins": [
-    "react",
-    "jsx-a11y",
     "flowtype",
     "import"
   ],

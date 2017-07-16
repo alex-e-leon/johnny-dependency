@@ -1,12 +1,11 @@
 {
   "name": "johnny-dependency",
   "version": "0.4.0",
-  "description": "Get a graph of npm dependencies",
+  "description": "npm -ls for remote packages",
   "main": "lib/index.js",
-  "bin": {
-    "johnny-dependency": "lib/cli.js"
-  },
-  "author": "alex leon <alexleon@domain.com.au>",
+  "bin": "lib/cli.js",
+  "repository": "alex-e-leon/johnny-dependency",
+  "author": "alex leon <alex@leon.st>",
   "license": "MIT",
   "scripts": {
     "build": "babel src/ -d lib/ && chmod 755 lib/cli.js",
@@ -20,11 +19,9 @@
     "babel-eslint": "^7.2.3",
     "babel-preset-flow": "^6.23.0",
     "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.0.1",
+    "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-import": "^2.6.0",
-    "eslint-plugin-jsx-a11y": "^5.1.0",
-    "eslint-plugin-react": "^7.1.0",
     "flow-bin": "^0.48.0",
     "mocha": "^3.4.2"
   },
@@ -41,12 +38,12 @@
   "keywords": [
     "cli",
     "npm",
+    "npm -ls",
+    "packages",
     "dependencies",
+    "dependency-tree",
     "dependency graph",
-    "dependency management",
-    "dependency versions",
-    "outdated dependencies",
-    "parse dependencies",
-    "version"
+    "dependency version",
+    "outdated dependencies"
   ]
 }
