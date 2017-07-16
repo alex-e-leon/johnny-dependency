@@ -1,6 +1,6 @@
 // @flow
 
-import type { PackageWithDeps, PackageAtVersion } from './types';
+import type { PackageWithDeps, PackageAtVersion, NormalizedDependencies } from './types';
 
 function resolveDependencies({ dependencies, resolvedDependencies }: {
   dependencies: Array<PackageWithDeps>,
@@ -21,19 +21,15 @@ function matchPackageNameAndVersion(a: PackageAtVersion, b: PackageAtVersion): b
   return (a.name === b.name && a.version === b.version);
 }
 
-function matchPackageName(a: PackageAtVersion, b: PackageAtVersion): boolean {
-  return (a.name === b.name);
-}
-
 function formatGraphWithoutCircularDeps(
-  ...args: *
+  initialRoot: PackageAtVersion,
+  resolvedDependencies: Array<PackageWithDeps>,
+  latestVersions: NormalizedDependencies,
 ) {
   const hits = [];
 
   function buildGraph(
     root: PackageAtVersion,
-    resolvedDependencies: Array<PackageWithDeps>,
-    latestVersions: Array<PackageWithDeps>,
   ) {
     if (!hits.find(name => name === root.name)) {
       hits.push(root.name);
@@ -42,27 +38,21 @@ function formatGraphWithoutCircularDeps(
         matchPackageNameAndVersion(npmPackage, root)
       )));
 
-      const latestVersion = latestVersions.find(npmPackage => (
-        matchPackageName(npmPackage, { name: root.name, version: 'latest' })
-      ));
-
       return {
         name: root.name,
         version: root.version,
-        latestVersion: latestVersion && latestVersion.version,
+        latestVersion: latestVersions[root.name],
         children: rootPackage && Object.keys(rootPackage.deps).map(
           dependency => buildGraph(
             { name: dependency, version: rootPackage.deps[dependency] },
-            resolvedDependencies,
-            latestVersions,
           ),
         ),
       };
     }
-    return root;
+    return Object.assign({}, { latestVersion: latestVersions[root.name] }, root);
   }
 
-  return buildGraph(...args);
+  return buildGraph(initialRoot);
 }
 
 module.exports = {
