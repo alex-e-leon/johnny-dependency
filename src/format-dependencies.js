@@ -2,7 +2,8 @@
 
 import type { PackageWithDeps, PackageAtVersion, PackageVersionMap } from './types';
 
-function resolveDependencies({ dependencies, resolvedDependencies }: {
+function resolveDependencies({
+  dependencies, resolvedDependencies }: {
   dependencies: Array<PackageWithDeps>,
   resolvedDependencies: { [string]: string },
 }) {
@@ -28,9 +29,7 @@ function formatGraphWithoutCircularDeps(
 ) {
   const hits = [];
 
-  function buildGraph(
-    root: PackageAtVersion,
-  ) {
+  function buildGraph(root: PackageAtVersion) {
     if (!hits.find(name => name === root.name)) {
       hits.push(root.name);
 
@@ -42,11 +41,10 @@ function formatGraphWithoutCircularDeps(
         name: root.name,
         version: root.version,
         latestVersion: latestVersions[root.name],
-        children: rootPackage && Object.keys(rootPackage.deps).map(
-          dependency => buildGraph(
-            { name: dependency, version: rootPackage.deps[dependency] },
-          ),
-        ),
+        children: rootPackage && Object.keys(rootPackage.deps).map(dependency => buildGraph({
+          name: dependency,
+          version: rootPackage.deps[dependency],
+        })),
       };
     }
     return Object.assign({}, { latestVersion: latestVersions[root.name] }, root);

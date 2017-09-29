@@ -1,6 +1,6 @@
 // @flow
 
-import type { PackageVersionMap, PackageAtVersion, PackageWithDeps, Manifest } from './types';
+import type { PackageVersionMap, PackageAtVersion, PackageWithDeps, PacoteOptions, Manifest } from './types';
 
 const pacote = require('pacote');
 const rxjs = require('rxjs');
@@ -17,7 +17,7 @@ function flattenDependencies(deps: PackageVersionMap): Array<PackageAtVersion> {
 
 function validateDeps(packages: Array<PackageAtVersion>): Array<PackageAtVersion> {
   return packages.filter((npmPackage) => {
-    const type = npa(`${npmPackage.name}@${npmPackage.version}`).type;
+    const { type } = npa(`${npmPackage.name}@${npmPackage.version}`);
 
     return type === 'tag' || type === 'version' || type === 'range';
   });
@@ -25,7 +25,7 @@ function validateDeps(packages: Array<PackageAtVersion>): Array<PackageAtVersion
 
 function getDependencies(
   thePackage: PackageAtVersion,
-  pacoteOptions: Object = {},
+  pacoteOptions: ?PacoteOptions = {},
 ): Promise<{
   dependencies: Array<PackageWithDeps>,
   resolvedDependencies: { [string]: string },
@@ -50,14 +50,14 @@ function getDependencies(
         rxjs.Observable.of(getPackageMeta(npmPackage, manifest)),
 
         rxjs.Observable.from(dependencies)
-        .mergeMap(dependency => (
-          getPackage(dependency).then(depManifest => (
-            { dependency, depManifest }
+          .mergeMap(dependency => (
+            getPackage(dependency).then(depManifest => (
+              { dependency, depManifest }
+            ))
           ))
-        ))
-        .mergeMap(({ dependency, depManifest }) => (
-          getDirectDependencies(dependency, depManifest)
-        )),
+          .mergeMap(({ dependency, depManifest }) => (
+            getDirectDependencies(dependency, depManifest)
+          )),
       );
     }
     return rxjs.Observable.empty();
@@ -70,8 +70,8 @@ function getDependencies(
     return new Promise((resolve) => {
       getPackage(npmPackage).then((manifest) => {
         getDirectDependencies(npmPackage, manifest)
-        .reduce((acc, curr) => acc.concat(curr), [])
-        .subscribe((dependencies) => { resolve({ dependencies, resolvedDependencies }); });
+          .reduce((acc, curr) => acc.concat(curr), [])
+          .subscribe((dependencies) => { resolve({ dependencies, resolvedDependencies }); });
       });
     });
   }
