@@ -7,33 +7,42 @@
   "repository": "alex-e-leon/johnny-dependency",
   "author": "alex leon <alex@leon.st>",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "babel src/ -d lib/ && chmod 755 lib/cli/index.js",
-    "start": "yarn run build && ./lib/cli/index.js",
-    "prepublish": "yarn run build",
-    "lint": "./node_modules/.bin/eslint src/",
-    "test": "yarn run flow && yarn run lint"
+    "start": "yarn build && ./lib/cli/index.js",
+    "prepare": "yarn build",
+    "lint": "eslint src test",
+    "test": "flow && yarn lint && nyc ava",
+    "test:watch": "ava --watch",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-preset-flow": "^6.23.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-flowtype": "^2.34.0",
-    "eslint-plugin-import": "^2.6.0",
-    "flow-bin": "^0.48.0",
-    "mocha": "^3.4.2"
+    "ava": "^0.22.0",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-plugin-transform-flow-comments": "^6.22.0",
+    "codecov": "^2.3.0",
+    "eslint": "^4.7.2",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-flowtype": "^2.36.0",
+    "eslint-plugin-import": "^2.7.0",
+    "execa": "^0.8.0",
+    "flow-bin": "^0.56.0",
+    "nyc": "^11.2.1"
   },
   "dependencies": {
-    "chalk": "^2.0.1",
+    "chalk": "^2.1.0",
     "lodash": "^4.17.4",
     "meow": "^3.7.0",
     "npm-package-arg": "^5.1.2",
-    "pacote": "^2.7.36",
-    "print-tree": "^0.1.1",
-    "rxjs": "^5.4.1",
-    "semver": "^5.3.0",
+    "pacote": "^6.0.2",
+    "print-tree": "^0.1.4",
+    "rxjs": "^5.4.3",
+    "semver": "^5.4.1",
     "untildify": "^3.0.2"
   },
   "keywords": [
@@ -46,5 +55,16 @@
     "dependency graph",
     "dependency version",
     "outdated dependencies"
-  ]
+  ],
+  "ava": {
+    "require": [
+      "babel-register"
+    ]
+  },
+  "nyc": {
+    "reporter": [
+      "html",
+      "text-summary"
+    ]
+  }
 }
