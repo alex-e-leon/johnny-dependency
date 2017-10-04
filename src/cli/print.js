@@ -37,12 +37,10 @@ function printLine(graph, branch) {
     ? dependencyColours[versionStatus]
     : chalk.bold.red;
 
-  console.log(
-    chalk.dim(branch)
+  console.log(chalk.dim(branch)
     + chalk.reset.white.bold(graph.name)
     + versionColour('@' + graph.version)
-    + latest,
-  );
+    + latest);
 }
 
 function printGraph(graph) {

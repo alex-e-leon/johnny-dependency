@@ -29,12 +29,12 @@ function getLatestDependencies(
   }
 
   return getLatest(packages)
-  .then(latestPackages => (
-    latestPackages.reduce((acc, npmPackage) => {
-      acc[npmPackage.name] = npmPackage.version;
-      return acc;
-    }, {})
-  ));
+    .then(latestPackages => (
+      latestPackages.reduce((acc, npmPackage) => {
+        acc[npmPackage.name] = npmPackage.version;
+        return acc;
+      }, {})
+    ));
 }
 
 module.exports = getLatestDependencies;

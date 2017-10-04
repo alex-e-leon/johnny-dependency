@@ -5,6 +5,11 @@ export type PackageAtVersion = {
   version: string
 };
 
+export type Node = PackageAtVersion & {
+  latestVersion: string,
+  children: Array<Node>,
+};
+
 export type PackageVersionMap = {
   [string]: string
 };
@@ -22,4 +27,7 @@ export type Manifest = {
   dependencies: PackageVersionMap,
   devDependencies: PackageVersionMap,
   peerDependencies: PackageVersionMap,
+};
+
+export type PacoteOptions = {
 };
